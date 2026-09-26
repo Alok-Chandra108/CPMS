@@ -1,0 +1,73 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:cluster": "pm2 start ecosystem.config.js --env production",
+    "stop:cluster": "pm2 stop ecosystem.config.js",
+    "reload:cluster": "pm2 reload ecosystem.config.js",
+    "status:cluster": "pm2 status",
+    "logs:cluster": "pm2 logs cpms-backend",
+    "dev": "nodemon server.js",
+    "test": "jest --runInBand --detectOpenHandles --forceExit --passWithNoTests",
+    "seed:admin": "node src/scripts/seedAdmin.js",
+    "migrate:up": "migrate-mongo up",
+    "migrate:down": "migrate-mongo down",
+    "migrate:create": "migrate-mongo create",
+    "migrate:status": "migrate-mongo status",
+    "atlas:backup": "node scripts/configure-atlas-backup.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.11.0",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-prom-bundle": "^8.0.0",
+    "express-rate-limit": "^8.3.2",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "morgan": "^1.10.1",
+    "multer": "^2.1.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "node-cron": "^4.5.0",
+    "pino": "^10.3.1",
+    "pino-http": "^11.0.0",
+    "prom-client": "^15.1.3",
+    "resend": "^6.12.4",
+    "xss-clean": "^0.1.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "migrate-mongo": "^14.0.7",
+    "nodemon": "^3.1.14",
+    "pino-pretty": "^13.1.3",
+    "pm2": "^5.3.1",
+    "supertest": "^7.0.0"
+  },
+  "overrides": {
+    "qs": "^6.16.0",
+    "multer-storage-cloudinary": {
+      "cloudinary": "$cloudinary"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.js",
+      "**/?(*.)+(spec|test).js"
+    ],
+    "testTimeout": 30000
+  }
+}
