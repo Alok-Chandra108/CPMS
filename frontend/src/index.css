@@ -10,11 +10,11 @@
   }
 
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Manrope', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #F8F9FA;
-    color: #1A1D21;
+    background-color: #F6F9FC; /* Stripe System Bg */
+    color: #0A2540; /* Stripe System Text */
     min-height: 100vh;
   }
 
@@ -28,12 +28,30 @@
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
-    -webkit-text-fill-color: #1A1D21;
+    -webkit-text-fill-color: #0A2540;
     transition: background-color 5000s ease-in-out 0s;
   }
 }
 
 @layer components {
+  /* Stripe Card Utility */
+  .stripe-card {
+    @apply bg-white border border-stripe-border shadow-stripe-sm rounded-xl transition-all duration-300;
+  }
+
+  .stripe-card:hover {
+    @apply shadow-stripe-card translate-y-[-2px];
+  }
+
+  /* Fallback for glass-card while migrating */
+  .glass-card {
+    @apply bg-white border border-stripe-border shadow-stripe-sm rounded-xl transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply shadow-stripe-card translate-y-[-2px];
+  }
+
   /* Custom scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
@@ -44,12 +62,12 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #CED4DA;
+    background-color: #D1D1D6; /* iOS Gray 4 */
     border-radius: 3px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #ADB5BD;
+    background-color: #8E8E93; /* iOS Gray 3 */
   }
 
   /* Line clamp utility */

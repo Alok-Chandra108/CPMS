@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { Menu, Bell } from 'lucide-react';
+import { Menu, Search, Bell } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import useAuth from '../../hooks/useAuth';
 
 const DashboardLayout = ({ children }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
   
   const { notices, readNotices } = useSelector((state) => state.notices);
-  const hasUnread = notices?.some(notice => !readNotices?.includes(notice._id));
+  const unreadCount = notices?.filter(n => !readNotices?.includes(n._id))?.length || 0;
 
-  // Get user initials for the small header avatar
   const initials = user?.fullName
     ?.split(' ')
     .map((n) => n[0])
@@ -21,7 +22,7 @@ const DashboardLayout = ({ children }) => {
     .slice(0, 2) || '??';
 
   return (
-    <div className="flex min-h-screen bg-neutral-50 font-sans text-neutral-900">
+    <div className="flex min-h-screen bg-stripe-bg font-sans text-stripe-text">
       {/* Sidebar */}
       <Sidebar
         isMobileOpen={mobileOpen}
@@ -30,45 +31,50 @@ const DashboardLayout = ({ children }) => {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Bar — visible on all sizes */}
-        <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-neutral-200/60">
-          <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-            {/* Left: Hamburger (mobile) + Greeting */}
+        {/* ── Top Bar ── */}
+        <header className="sticky top-0 z-20 bg-white border-b border-stripe-border">
+          <div className="flex items-center justify-between h-14 px-4 sm:px-6 lg:px-8">
+            {/* Left */}
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setMobileOpen(true)}
-                className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-neutral-100 text-neutral-600 transition-colors"
+                className="lg:hidden p-1.5 -ml-1.5 rounded-lg hover:bg-stripe-bg text-stripe-textSecondary transition-colors"
                 aria-label="Open menu"
               >
                 <Menu className="h-5 w-5" />
               </button>
 
-              <div className="hidden sm:block">
-                <p className="text-sm font-semibold text-neutral-800">
-                  {getGreeting()}, {user?.fullName?.split(' ')[0]} 👋
+              <div>
+                <p className="text-sm font-bold text-stripe-text leading-tight">
+                  {getGreeting()}, {user?.fullName?.split(' ')[0]}
                 </p>
-                <p className="text-xs text-neutral-500">
+                <p className="text-[11px] font-medium text-stripe-textSecondary leading-tight">
                   {new Date().toLocaleDateString('en-IN', {
                     weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
+                    month: 'short',
                     day: 'numeric',
                   })}
                 </p>
               </div>
             </div>
 
-            {/* Right: Search + Notifications + Avatar */}
-            <div className="flex items-center gap-2">
-
-              {/* Notification Bell temporarily removed as per request */}
-              {/* Mini Avatar */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="h-9 w-9 rounded-full bg-gradient-to-br from-brand-blue to-brand-blue-dark flex items-center justify-center cursor-pointer shadow-sm"
+            {/* Right */}
+            <div className="flex items-center gap-1.5">
+              {/* Notification Bell */}
+              <button
+                onClick={() => navigate('/dashboard/student/notices')}
+                className="relative p-2 rounded-lg hover:bg-stripe-bg text-stripe-textSecondary hover:text-stripe-text transition-colors"
               >
-                <span className="text-xs font-bold text-white leading-none">{initials}</span>
-              </motion.div>
+                <Bell className="h-[18px] w-[18px]" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-1 right-1 h-2 w-2 bg-error rounded-full ring-2 ring-white" />
+                )}
+              </button>
+
+              {/* Avatar */}
+              <div className="h-8 w-8 rounded-full bg-brand-primary/10 flex items-center justify-center cursor-pointer border border-stripe-border">
+                <span className="text-[11px] font-bold text-brand-primary leading-none">{initials}</span>
+              </div>
             </div>
           </div>
         </header>
@@ -82,7 +88,6 @@ const DashboardLayout = ({ children }) => {
   );
 };
 
-// Helper: returns time-based greeting
 function getGreeting() {
   const hour = new Date().getHours();
   if (hour < 12) return 'Good morning';

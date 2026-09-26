@@ -416,7 +416,7 @@ const DriveApplicationsPage = () => {
       )}
       {/* Bulk Status Update Modal */}
       {isBulkStatusModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 ">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
             <div className="p-5 border-b border-neutral-100 flex items-center justify-between">
               <h3 className="text-lg font-bold text-neutral-900">Update Status for {selectedAppIds.length} Students</h3>

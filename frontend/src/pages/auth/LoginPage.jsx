@@ -109,14 +109,13 @@ const LoginPage = () => {
 
   return (
     <AuthLayout>
-      <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8 w-full max-w-md">
+      <div className="w-full">
         {/* Header */}
-        <div className="mb-6 flex flex-col items-center text-center">
-          <img src={miteLogo} alt="MITE Logo" className="h-10 mb-4" />
-          <h1 className="text-2xl font-bold tracking-tight text-neutral-900">
+        <div className="mb-8 flex flex-col items-center text-center lg:items-start lg:text-left">
+          <h1 className="text-3xl font-extrabold tracking-tight text-stripe-text">
             Welcome back
           </h1>
-          <p className="mt-1.5 text-sm text-neutral-600">
+          <p className="mt-2 text-sm font-medium text-stripe-textSecondary">
             Sign in to your placement portal
           </p>
         </div>
@@ -154,17 +153,17 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Email */}
           <div>
-            <label htmlFor="login-email" className="block text-xs font-medium text-neutral-500 mb-1.5">
+            <label htmlFor="login-email" className="block text-xs font-bold text-stripe-text/80 mb-1.5 uppercase tracking-wide">
               Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-stripe-textSecondary" />
               <input
                 id="login-email"
                 type="email"
                 placeholder="yourname@mite.ac.in"
                 {...register('email')}
-                className={`h-11 w-full rounded-lg border bg-white pl-10 pr-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all duration-200 ${errors.email ? 'border-red-400' : 'border-neutral-300'
+                className={`h-12 w-full rounded-xl border bg-white/80  pl-10 pr-4 text-sm font-medium text-stripe-text placeholder:text-stripe-textSecondary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary shadow-sm transition-all duration-200 ${errors.email ? 'border-error' : 'border-stripe-border'
                   }`}
               />
             </div>
@@ -178,7 +177,7 @@ const LoginPage = () => {
 
           {/* Password */}
           <div>
-            <label htmlFor="login-password" className="block text-xs font-medium text-neutral-500 mb-1.5">
+            <label htmlFor="login-password" className="block text-xs font-bold text-stripe-text/80 mb-1.5 uppercase tracking-wide">
               Password
             </label>
             <PasswordInput
@@ -202,25 +201,25 @@ const LoginPage = () => {
               <input
                 type="checkbox"
                 {...register('rememberMe')}
-                className="h-4 w-4 rounded border-neutral-300 text-brand-orange focus:ring-brand-orange"
+                className="h-4 w-4 rounded border-stripe-border text-brand-primary focus:ring-brand-primary shadow-sm"
               />
-              <span className="text-xs text-neutral-600">Remember me</span>
+              <span className="text-xs font-semibold text-stripe-textSecondary">Remember me</span>
             </label>
             <Link
               to="/forgot-password"
-              className="text-xs font-medium text-brand-blue hover:text-brand-blue-dark underline-offset-4 hover:underline transition-colors"
+              className="text-xs font-bold text-brand-primary hover:text-brand-primary-dark transition-colors"
             >
               Forgot password?
             </Link>
           </div>
 
           {/* Submit */}
-          <div className="pt-2">
+          <div className="pt-4">
             <motion.button
               type="submit"
               disabled={isLoading}
               whileTap={{ scale: 0.98 }}
-              className="h-11 w-full rounded-lg bg-brand-orange text-white text-sm font-semibold tracking-wide hover:bg-orange-600 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="h-12 w-full rounded-xl bg-brand-primary text-white text-sm font-bold tracking-wide shadow-sm hover:bg-brand-primary-dark hover:shadow active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -235,11 +234,11 @@ const LoginPage = () => {
         </form>
 
         {/* Footer */}
-        <p className="mt-6 text-center text-sm text-neutral-600">
+        <p className="mt-8 text-center lg:text-left text-sm font-medium text-stripe-textSecondary">
           Don't have an account?{' '}
           <Link
             to="/register"
-            className="text-brand-blue font-medium hover:text-brand-blue-dark underline-offset-4 hover:underline"
+            className="text-brand-primary font-bold hover:text-brand-primary-dark transition-colors"
           >
             Register
           </Link>
