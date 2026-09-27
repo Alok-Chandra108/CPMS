@@ -5,6 +5,9 @@ const User = require('../models/User.model');
 const ApiResponse = require('../utils/ApiResponse');
 const { queueStatusUpdateEmail, queueBulkStatusUpdateEmails } = require('../services/emailQueue.service');
 const { logger } = require('../config/logger');
+const axios = require('axios');
+// Use PDFParse class from pdf-parse v2
+const { PDFParse } = require('pdf-parse');
 
 /**
  * Apply to a placement drive
@@ -304,6 +307,67 @@ exports.updateBulkApplicationStatus = async (req, res, next) => {
 
     return ApiResponse.success(res, 'Applications status updated successfully');
   } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Controller to handle Resume Upload, parse it, and get ML Diagnostics
+ * Expected Route: POST /api/applications/diagnostic
+ * Middleware: multer (for file upload)
+ */
+exports.analyzeResume = async (req, res, next) => {
+  try {
+    if (!req.file || req.file.mimetype !== 'application/pdf') {
+      return ApiResponse.error(res, 'Please upload a valid PDF resume.', 400);
+    }
+
+    const { jobDescriptionText } = req.body;
+    if (!jobDescriptionText) {
+      return ApiResponse.error(res, 'Job description text is required.', 400);
+    }
+
+    // Extract Text from PDF Buffer using PDFParse (pdf-parse v2)
+    const parser = new PDFParse({ data: req.file.buffer });
+    let resumeText = '';
+    try {
+      const pdfData = await parser.getText();
+      resumeText = (pdfData && pdfData.text) ? pdfData.text : '';
+    } finally {
+      await parser.destroy();
+    }
+
+    if (!resumeText || !resumeText.trim()) {
+      return ApiResponse.error(res, 'Could not extract readable text from the uploaded PDF. Please ensure it is not a scanned image.', 400);
+    }
+
+    // Make Internal API Call to Python ML Microservice
+    const mlResponse = await axios.post('http://localhost:8000/api/v1/nlp/resume-diagnostic', {
+      student_id: req.user.id,
+      job_description_text: jobDescriptionText,
+      resume_text: resumeText
+    });
+
+    const diagnosticData = mlResponse.data.data;
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        match_score: diagnosticData.cosine_similarity_score,
+        missing_keywords: diagnosticData.missing_critical_keywords,
+        matched_keywords: diagnosticData.matched_keywords
+      },
+      message: 'Resume analyzed successfully.'
+    });
+
+  } catch (error) {
+    logger.error('ML Analysis Error:', error.message);
+    
+    // Handle Python Service Unavailability
+    if (error.code === 'ECONNREFUSED') {
+      return ApiResponse.error(res, 'AI Microservice is currently down for maintenance.', 503);
+    }
+
     next(error);
   }
 };

@@ -151,10 +151,24 @@ const uploadNoticeFile = multer({
   },
 });
 
+// Memory storage for temporary ML processing (doesn't upload to cloudinary)
+const memoryStorage = multer.memoryStorage();
+const uploadBuffer = multer({
+  storage: memoryStorage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: MAX_FILE_SIZE, // 2MB limit
+    files: 1,
+    parts: 10,
+    headerPairs: 20,
+  },
+});
+
 module.exports = {
   upload,
   uploadImage,
   uploadDriveFiles,
   uploadNoticeFile,
+  uploadBuffer,
   MAX_FILE_SIZE,
 };
