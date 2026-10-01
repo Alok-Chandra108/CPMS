@@ -103,7 +103,7 @@ const DriveListItem = ({ drive, hasApplied }) => {
           </span>
         </div>
 
-        <div className="flex flex-col items-start sm:items-end w-1/2 sm:w-auto hidden md:flex">
+        <div className="hidden md:flex flex-col items-start sm:items-end w-1/2 sm:w-auto">
           <span className="text-[10px] font-bold text-stripe-textSecondary uppercase tracking-wider">Date</span>
           <span className="text-[12px] font-bold text-stripe-text">
             {new Date(drive.driveDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}

@@ -13,7 +13,8 @@ import {
   X,
   Hexagon,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ScanLine,
 } from 'lucide-react';
 import { logoutUser } from '../../features/auth/authThunks';
 import useAuth from '../../hooks/useAuth';
@@ -24,6 +25,7 @@ const studentNavItems = [
   { label: 'Drives', icon: Briefcase, to: '/dashboard/student/drives' },
   { label: 'Applications', icon: FileText, to: '/dashboard/student/applications' },
   { label: 'Notices', icon: Bell, to: '/dashboard/student/notices' },
+  { label: 'AI Scanner', icon: ScanLine, to: '/dashboard/student/resume-scanner' },
 ];
 
 const mobilePanelVariants = {

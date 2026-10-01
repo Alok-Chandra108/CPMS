@@ -353,9 +353,22 @@ exports.analyzeResume = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       data: {
-        match_score: diagnosticData.cosine_similarity_score,
+        // TF-IDF document-level similarity (Overall Match)
+        cosine_similarity_score: diagnosticData.cosine_similarity_score,
+        
+        // Hybrid NLP skill coverage (Skills Match) 
+        skill_coverage_score: diagnosticData.skill_coverage_score,
+        
+        // Keyword lists
         missing_keywords: diagnosticData.missing_critical_keywords,
-        matched_keywords: diagnosticData.matched_keywords
+        matched_keywords: diagnosticData.matched_keywords,
+        
+        // Additional metrics for transparency
+        total_jd_skills: diagnosticData.total_jd_skills,
+        total_resume_skills: diagnosticData.total_resume_skills,
+        matched_count: diagnosticData.matched_count,
+        missing_count: diagnosticData.missing_count,
+        extraction_method: diagnosticData.extraction_method
       },
       message: 'Resume analyzed successfully.'
     });

@@ -1,6 +1,37 @@
 node_modules/
-*.env
 dist/
 build/
 .DS_Store
+
+# Environment files (NEVER commit secrets)
+*.env
+.env
+.env.local
+.env.production
+.env.*
+
+# Python virtual environment (NEVER commit)
+venv/
+.venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ML model artifacts (can be large)
+*.pkl
+*.joblib
+*.h5
+*.model
+
+# IDE settings
+.vscode/
+.idea/
+
+# Logs
+*.log
 
