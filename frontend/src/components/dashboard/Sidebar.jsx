@@ -15,17 +15,19 @@ import {
   ChevronLeft,
   ChevronRight,
   ScanLine,
+  BarChart2,
 } from 'lucide-react';
 import { logoutUser } from '../../features/auth/authThunks';
 import useAuth from '../../hooks/useAuth';
 
 const studentNavItems = [
-  { label: 'Dashboard', icon: LayoutDashboard, to: '/dashboard/student' },
-  { label: 'My Profile', icon: User, to: '/dashboard/student/profile' },
-  { label: 'Drives', icon: Briefcase, to: '/dashboard/student/drives' },
-  { label: 'Applications', icon: FileText, to: '/dashboard/student/applications' },
-  { label: 'Notices', icon: Bell, to: '/dashboard/student/notices' },
-  { label: 'AI Scanner', icon: ScanLine, to: '/dashboard/student/resume-scanner' },
+  { label: 'Dashboard',    icon: LayoutDashboard, to: '/dashboard/student' },
+  { label: 'My Profile',   icon: User,            to: '/dashboard/student/profile' },
+  { label: 'Drives',       icon: Briefcase,       to: '/dashboard/student/drives' },
+  { label: 'Applications', icon: FileText,        to: '/dashboard/student/applications' },
+  { label: 'Notices',      icon: Bell,            to: '/dashboard/student/notices' },
+  { label: 'AI Scanner',   icon: ScanLine,        to: '/dashboard/student/resume-scanner' },
+  { label: 'AI Dashboard', icon: BarChart2,       to: '/dashboard/student/ai-dashboard' },
 ];
 
 const mobilePanelVariants = {

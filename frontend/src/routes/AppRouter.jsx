@@ -20,6 +20,7 @@ const DriveDetail = lazy(() => import('../pages/dashboard/DriveDetail'));
 const ApplicationsPage = lazy(() => import('../pages/dashboard/ApplicationsPage'));
 const NoticesPage = lazy(() => import('../pages/dashboard/NoticesPage'));
 const ResumeScannerPage = lazy(() => import('../pages/dashboard/ResumeScannerPage'));
+const AIDashboardPage   = lazy(() => import('../pages/dashboard/AIDashboardPage'));
 
 // Admin Dashboard pages (lazy-loaded)
 const AdminDashboard = lazy(() => import('../pages/dashboard/AdminDashboard'));
@@ -95,6 +96,7 @@ const AppRouter = () => {
           <Route path="applications" element={<ApplicationsPage />} />
           <Route path="notices" element={<NoticesPage />} />
           <Route path="resume-scanner" element={<ResumeScannerPage />} />
+          <Route path="ai-dashboard"   element={<AIDashboardPage />} />
         </Route>
         <Route
           path="/dashboard/admin"
